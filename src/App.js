@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import moment from 'moment';
 
 const theme = {
   font: 'sans-serif',
@@ -10,17 +9,98 @@ const theme = {
 const Wrapper = styled.div`
   background-color: #d5d8dc;
   flex: 1;
+  height: 500px;
+  width: 1500px;
+  display: flex;
+`;
+
+const SmartRank = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 50px;
+  height: 50px;
+  bottom: 0;
+  position: absolute;
+  &:hover {
+    background-color: #3498db;
+  }
+`;
+const Rankn = styled.span`
+  font-size: 200%;
+  padding-left: 30%;
+  text-align: center;
+  color: #ffffff;
+`;
+const Popup = styled.div`
+  height: 300px;
+  width: 400px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 130%;
+`;
+const PopupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+const PopupHeader = styled.div`
+  flex: 1;
+  padding-left: 5%;
+  padding-right: 5%;
+  display: flex;
+`;
+const SmartH1 = styled.span`
+  font-size: 120%;
+`;
+const PopupContentsPrice = styled.div`
+  flex: 1;
+  display: flex;
+`;
+const PopupContentsDistance = styled.div`
+  flex: 1;
+  display: flex;
+`;
+const PopupContentsStars = styled.div`
+  flex: 1;
+  display: flex;
+`;
+const PopupContentsLoyalty = styled.div`
+  flex: 1;
+  display: flex;
+`;
+const PopupContentsWalmart = styled.div`
+  flex: 1;
+  display: flex;
+`;
+const PriceImgW = styled.div`
+  box-sizing: border-box;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+const PriceImg = styled.img`
+  height: 50%;
+  width: 50%;
+`;
+const PopupConTextW = styled.div`
+  flex: 1;
+`;
+const PopupConText = styled.span`
+  font-size: 100%;
+`;
+const PopContBarW = styled.div`
+  flex: 1;
 `;
 
 //Whole component background
 const Background = styled.div`
-  border-color: #000000;
-  height: 500px;
-  width: 1500px;
+  border-color: #fcfcfc;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   background-color: #ffffff;
+  position: relative;
+  flex: 1;
 `;
 
 //The Componets Under the DIVTOP
@@ -215,7 +295,6 @@ const M3button = styled.div`
   background-color: #7dcdf4;
 `;
 const S1B = styled.button`
-  font-size: 150%;
   font-family: 'Monospace';
   background-color: #317ce2;
   display: block;
@@ -262,11 +341,92 @@ const Input1 = styled.input`
 `;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hover: true
+    };
+    this.handleMouseIn = this.handleMouseIn.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
+  }
+
+  handleMouseIn() {
+    this.setState({ hover: true });
+  }
+
+  handleMouseOut() {
+    this.setState({ hover: false });
+  }
+
   render() {
+    const tooltipStyle = {
+      display: this.state.hover ? 'block' : 'none'
+    };
     return (
       <ThemeProvider theme={theme}>
         <Wrapper>
           <Background>
+            <SmartRank
+              onMouseOver={this.handleMouseIn}
+              onMouseOut={this.handleMouseOut}
+            >
+              <Rankn>1</Rankn>
+              <Popup style={tooltipStyle}>
+                <PopupWrapper>
+                  <PopupHeader>
+                    <SmartH1>
+                      <u>SmartRank: 1 out of 183 options</u>
+                    </SmartH1>
+                  </PopupHeader>
+                  <PopupContentsPrice>
+                    <PriceImgW>
+                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
+                    </PriceImgW>
+                    <PopupConTextW>
+                      <PopupConText>Price</PopupConText>
+                    </PopupConTextW>
+                    <PopContBarW></PopContBarW>
+                  </PopupContentsPrice>
+                  <PopupContentsDistance>
+                    <PriceImgW>
+                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
+                    </PriceImgW>
+                    <PopupConTextW>
+                      <PopupConText>Distance</PopupConText>
+                    </PopupConTextW>
+                    <PopContBarW></PopContBarW>
+                  </PopupContentsDistance>
+                  <PopupContentsStars>
+                    <PriceImgW>
+                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
+                    </PriceImgW>
+                    <PopupConTextW>
+                      <PopupConText>Stars</PopupConText>
+                    </PopupConTextW>
+                    <PopContBarW></PopContBarW>
+                  </PopupContentsStars>
+                  <PopupContentsLoyalty>
+                    <PriceImgW>
+                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
+                    </PriceImgW>
+                    <PopupConTextW>
+                      <PopupConText>Loyalty</PopupConText>
+                    </PopupConTextW>
+                    <PopContBarW></PopContBarW>
+                  </PopupContentsLoyalty>
+                  <PopupContentsWalmart>
+                    <PriceImgW>
+                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
+                    </PriceImgW>
+                    <PopupConTextW>
+                      <PopupConText>Walmart Preferred</PopupConText>
+                    </PopupConTextW>
+                    <PopContBarW></PopContBarW>
+                  </PopupContentsWalmart>
+                </PopupWrapper>
+              </Popup>
+            </SmartRank>
             <Top>
               <TopWrapper>
                 <TopH1>
