@@ -8,10 +8,18 @@ const theme = {
 //Whole component Wrapper
 const Wrapper = styled.div`
   background-color: #d5d8dc;
-  flex: 1;
   height: 500px;
   width: 1500px;
+`;
+
+//Whole component background
+const Background = styled.div`
   display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: #ffffff;
+  position: relative;
+  flex: 1;
 `;
 
 const SmartRank = styled.div`
@@ -31,21 +39,21 @@ const Rankn = styled.span`
   color: #ffffff;
 `;
 const Popup = styled.div`
-  height: 300px;
   width: 400px;
   background-color: #ffffff;
   position: absolute;
   top: 130%;
+  display: flex;
 `;
 const PopupWrapper = styled.div`
-  display: flex;
+  height: 100%;
+  width: 100%;
   flex-direction: column;
-  flex: 1;
+  display: flex;
 `;
 const PopupHeader = styled.div`
   flex: 1;
-  padding-left: 5%;
-  padding-right: 5%;
+  margin: 2%;
   display: flex;
 `;
 const SmartH1 = styled.span`
@@ -54,22 +62,16 @@ const SmartH1 = styled.span`
 const PopupContentsPrice = styled.div`
   flex: 1;
   display: flex;
+  padding: 2%;
+  box-sizing: border-box;
 `;
-const PopupContentsDistance = styled.div`
-  flex: 1;
+const Li = styled.li`
   display: flex;
-`;
-const PopupContentsStars = styled.div`
-  flex: 1;
-  display: flex;
-`;
-const PopupContentsLoyalty = styled.div`
-  flex: 1;
-  display: flex;
-`;
-const PopupContentsWalmart = styled.div`
-  flex: 1;
-  display: flex;
+  position: relative;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin: 1px;
 `;
 const PriceImgW = styled.div`
   box-sizing: border-box;
@@ -79,28 +81,74 @@ const PriceImgW = styled.div`
   display: flex;
 `;
 const PriceImg = styled.img`
-  height: 50%;
-  width: 50%;
+  height: 35px;
+  width: 35px;
 `;
 const PopupConTextW = styled.div`
-  flex: 1;
+  flex: 4;
+  padding-top: 2%;
+  padding-left: 2%;
 `;
 const PopupConText = styled.span`
   font-size: 100%;
+  align-self: Right;
+`;
+const PopupConAve = styled.span`
+  font-size: 110%;
+  display: inline-block;
+  color: #f1c40f;
+`;
+const PopupConGood = styled.span`
+  font-size: 110%;
+  display: inline-block;
+  padding-left: 50%;
+  color: green;
+`;
+const PopupConGreat = styled.span`
+  font-size: 110%;
+  display: inline-block;
+  padding-left: 75%;
+  color: #2e86c1;
 `;
 const PopContBarW = styled.div`
-  flex: 1;
-`;
-
-//Whole component background
-const Background = styled.div`
-  border-color: #fcfcfc;
+  flex: 4;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  background-color: #ffffff;
-  position: relative;
+`;
+const PopContBarWFunc = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const PopContBarTop = styled.div`
   flex: 1;
+`;
+const PopContBarTopBack = styled.div`
+  background-color: #aed6f1;
+  width: 100%;
+  height: 35%;
+  margin-top: 5%;
+`;
+const PopContBarTopAve = styled.div`
+  background-color: #2a7ce5;
+  width: 33%;
+  height: 100%;
+`;
+const PopContBarTopGood = styled.div`
+  background-color: #2a7ce5;
+  width: 66%;
+  height: 100%;
+`;
+const PopContBarTopGreat = styled.div`
+  background-color: #2a7ce5;
+  width: 99%;
+  height: 100%;
+`;
+const PopContBarBot = styled.div`
+  flex: 1;
+`;
+const PopContPerks = styled.div`
+  flex: 1;
+  text-align: Right;
 `;
 
 //The Componets Under the DIVTOP
@@ -339,6 +387,56 @@ const Input1 = styled.input`
   border: 2px solid #abb2b9;
   margin-top: 5%;
 `;
+function Rating(props) {
+  const rating = props.ratings;
+  if (rating === 'Average') {
+    return (
+      <PopContBarWFunc>
+        <PopContBarTop>
+          <PopContBarTopBack>
+            <PopContBarTopAve></PopContBarTopAve>
+          </PopContBarTopBack>
+        </PopContBarTop>
+        <PopContBarBot>
+          <PopupConAve>Average</PopupConAve>
+        </PopContBarBot>
+      </PopContBarWFunc>
+    );
+  } else if (rating === 'Good') {
+    return (
+      <PopContBarWFunc>
+        <PopContBarTop>
+          <PopContBarTopBack>
+            <PopContBarTopGood></PopContBarTopGood>
+          </PopContBarTopBack>
+        </PopContBarTop>
+        <PopContBarBot>
+          <PopupConGood>Good</PopupConGood>
+        </PopContBarBot>
+      </PopContBarWFunc>
+    );
+  } else if (rating === 'Great') {
+    return (
+      <PopContBarWFunc>
+        <PopContBarTop>
+          <PopContBarTopBack>
+            <PopContBarTopGreat></PopContBarTopGreat>
+          </PopContBarTopBack>
+        </PopContBarTop>
+        <PopContBarBot>
+          <PopupConGreat>Great</PopupConGreat>
+        </PopContBarBot>
+      </PopContBarWFunc>
+    );
+  } else
+    return (
+      <PopContPerks>
+        <PopupConText>
+          <strong>Yes</strong>
+        </PopupConText>
+      </PopContPerks>
+    );
+}
 
 class App extends Component {
   constructor(props) {
@@ -363,6 +461,36 @@ class App extends Component {
     const tooltipStyle = {
       display: this.state.hover ? 'block' : 'none'
     };
+    const Dropdown = [
+      {
+        icon: 'https://img.icons8.com/cotton/64/000000/us-dollar--v1.png',
+        eName: 'Price',
+        rating: 'Average',
+        bar: '33%'
+      },
+      {
+        icon: 'https://img.icons8.com/wired/64/000000/point-objects.png',
+        eName: 'Distance',
+        rating: 'Good',
+        bar: '66%'
+      },
+      {
+        icon: 'https://img.icons8.com/ios/50/000000/star.png',
+        eName: 'Stars',
+        rating: 'Great',
+        bar: '97%'
+      },
+      {
+        icon: 'https://img.icons8.com/ios/50/000000/loyalty.png',
+        eName: 'Loyalty',
+        rating: 'Yes'
+      },
+      {
+        icon: 'https://img.icons8.com/color/48/000000/walmart.png',
+        eName: 'Walmart preferred',
+        rating: 'Yes'
+      }
+    ];
     return (
       <ThemeProvider theme={theme}>
         <Wrapper>
@@ -379,51 +507,23 @@ class App extends Component {
                       <u>SmartRank: 1 out of 183 options</u>
                     </SmartH1>
                   </PopupHeader>
-                  <PopupContentsPrice>
-                    <PriceImgW>
-                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
-                    </PriceImgW>
-                    <PopupConTextW>
-                      <PopupConText>Price</PopupConText>
-                    </PopupConTextW>
-                    <PopContBarW></PopContBarW>
-                  </PopupContentsPrice>
-                  <PopupContentsDistance>
-                    <PriceImgW>
-                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
-                    </PriceImgW>
-                    <PopupConTextW>
-                      <PopupConText>Distance</PopupConText>
-                    </PopupConTextW>
-                    <PopContBarW></PopContBarW>
-                  </PopupContentsDistance>
-                  <PopupContentsStars>
-                    <PriceImgW>
-                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
-                    </PriceImgW>
-                    <PopupConTextW>
-                      <PopupConText>Stars</PopupConText>
-                    </PopupConTextW>
-                    <PopContBarW></PopContBarW>
-                  </PopupContentsStars>
-                  <PopupContentsLoyalty>
-                    <PriceImgW>
-                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
-                    </PriceImgW>
-                    <PopupConTextW>
-                      <PopupConText>Loyalty</PopupConText>
-                    </PopupConTextW>
-                    <PopContBarW></PopContBarW>
-                  </PopupContentsLoyalty>
-                  <PopupContentsWalmart>
-                    <PriceImgW>
-                      <PriceImg src="https://img.icons8.com/cotton/64/000000/us-dollar--v1.png" />
-                    </PriceImgW>
-                    <PopupConTextW>
-                      <PopupConText>Walmart Preferred</PopupConText>
-                    </PopupConTextW>
-                    <PopContBarW></PopContBarW>
-                  </PopupContentsWalmart>
+                  {Dropdown.map((model, index) => (
+                    <div key={index}>
+                      <Li>
+                        <PopupContentsPrice>
+                          <PriceImgW>
+                            <PriceImg src={model.icon} />
+                          </PriceImgW>
+                          <PopupConTextW>
+                            <PopupConText>{model.eName}</PopupConText>
+                          </PopupConTextW>
+                          <PopContBarW>
+                            <Rating ratings={model.rating} />
+                          </PopContBarW>
+                        </PopupContentsPrice>
+                      </Li>
+                    </div>
+                  ))}
                 </PopupWrapper>
               </Popup>
             </SmartRank>
