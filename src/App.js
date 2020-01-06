@@ -213,7 +213,7 @@ const Main = styled.div`
 //All styled components under Main1
 const Main1 = styled.div`
   box-sizing: border-box;
-  flex: 1em;
+  flex: 1;
   flex-direction: column;
   display: flex;
 `;
