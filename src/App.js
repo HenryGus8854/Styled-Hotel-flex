@@ -40,14 +40,16 @@ const Rankn = styled.span`
 `;
 const Popup = styled.div`
   width: 400px;
-  background-color: #ffffff;
   position: absolute;
-  top: 130%;
+  border-left: 20px solid white;
+  border-top: 20px solid transparent;
+  top: 100%;
   display: flex;
 `;
 const PopupWrapper = styled.div`
   height: 100%;
   width: 100%;
+  background-color: #ffffff;
   flex-direction: column;
   display: flex;
 `;
@@ -387,56 +389,6 @@ const Input1 = styled.input`
   border: 2px solid #abb2b9;
   margin-top: 5%;
 `;
-function Rating(props) {
-  const rating = props.ratings;
-  if (rating === 'Average') {
-    return (
-      <PopContBarWFunc>
-        <PopContBarTop>
-          <PopContBarTopBack>
-            <PopContBarTopAve></PopContBarTopAve>
-          </PopContBarTopBack>
-        </PopContBarTop>
-        <PopContBarBot>
-          <PopupConAve>Average</PopupConAve>
-        </PopContBarBot>
-      </PopContBarWFunc>
-    );
-  } else if (rating === 'Good') {
-    return (
-      <PopContBarWFunc>
-        <PopContBarTop>
-          <PopContBarTopBack>
-            <PopContBarTopGood></PopContBarTopGood>
-          </PopContBarTopBack>
-        </PopContBarTop>
-        <PopContBarBot>
-          <PopupConGood>Good</PopupConGood>
-        </PopContBarBot>
-      </PopContBarWFunc>
-    );
-  } else if (rating === 'Great') {
-    return (
-      <PopContBarWFunc>
-        <PopContBarTop>
-          <PopContBarTopBack>
-            <PopContBarTopGreat></PopContBarTopGreat>
-          </PopContBarTopBack>
-        </PopContBarTop>
-        <PopContBarBot>
-          <PopupConGreat>Great</PopupConGreat>
-        </PopContBarBot>
-      </PopContBarWFunc>
-    );
-  } else
-    return (
-      <PopContPerks>
-        <PopupConText>
-          <strong>Yes</strong>
-        </PopupConText>
-      </PopContPerks>
-    );
-}
 
 class App extends Component {
   constructor(props) {
@@ -465,20 +417,17 @@ class App extends Component {
       {
         icon: 'https://img.icons8.com/cotton/64/000000/us-dollar--v1.png',
         eName: 'Price',
-        rating: 'Average',
-        bar: '33%'
+        rating: 'Average'
       },
       {
         icon: 'https://img.icons8.com/wired/64/000000/point-objects.png',
         eName: 'Distance',
-        rating: 'Good',
-        bar: '66%'
+        rating: 'Good'
       },
       {
         icon: 'https://img.icons8.com/ios/50/000000/star.png',
         eName: 'Stars',
-        rating: 'Great',
-        bar: '97%'
+        rating: 'Great'
       },
       {
         icon: 'https://img.icons8.com/ios/50/000000/loyalty.png',
@@ -518,7 +467,46 @@ class App extends Component {
                             <PopupConText>{model.eName}</PopupConText>
                           </PopupConTextW>
                           <PopContBarW>
-                            <Rating ratings={model.rating} />
+                            {(model.rating && model.rating === 'Yes' && (
+                              <PopContPerks>
+                                <PopupConText>
+                                  <strong>Yes</strong>
+                                </PopupConText>
+                              </PopContPerks>
+                            )) || (
+                              <PopContBarWFunc>
+                                <PopContBarTop>
+                                  <PopContBarTopBack>
+                                    {(model.rating &&
+                                      model.rating === 'Average' && (
+                                        <PopContBarTopAve></PopContBarTopAve>
+                                      )) ||
+                                      (model.rating &&
+                                        model.rating === 'Good' && (
+                                          <PopContBarTopGood></PopContBarTopGood>
+                                        )) ||
+                                      (model.rating &&
+                                        model.rating === 'Great' && (
+                                          <PopContBarTopGreat></PopContBarTopGreat>
+                                        ))}
+                                  </PopContBarTopBack>
+                                </PopContBarTop>
+                                <PopContBarBot>
+                                  {(model.rating &&
+                                    model.rating === 'Average' && (
+                                      <PopupConAve>Average</PopupConAve>
+                                    )) ||
+                                    (model.rating &&
+                                      model.rating === 'Good' && (
+                                        <PopupConGood>Good</PopupConGood>
+                                      )) ||
+                                    (model.rating &&
+                                      model.rating === 'Great' && (
+                                        <PopupConGreat>Great</PopupConGreat>
+                                      ))}
+                                </PopContBarBot>
+                              </PopContBarWFunc>
+                            )}
                           </PopContBarW>
                         </PopupContentsPrice>
                       </Li>
