@@ -155,7 +155,7 @@ const PopContPerks = styled.div`
 
 //The dialog model DIVs
 const ModelPopup = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0%;
   right: 0%;
   bottom: 0%;
@@ -165,6 +165,7 @@ const ModelPopup = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  justify-self: center;
 `;
 
 const PopupHotelInfo = styled.div`
@@ -175,14 +176,24 @@ const PopupHotelInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 9;
+  border-radius: 3px;
+  padding: 1%;
+  position: relative;
 `;
 const ButtonCloseCon = styled.div`
-  flex: 1;
+  position: absolute;
+  top: 0%;
+  right: 1%;
 `;
 const ButtonClose = styled.button`
   font-size: 1em;
   flex: 1;
+  border: none;
+  background-color: #ffffff;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.12) 0 0 12px;
+    background-color: #5dade2;
+  }
 `;
 
 //The Componets Under the DIVTOP
@@ -586,9 +597,9 @@ class App extends Component {
                 </M1Img>
               </Main1>
               <Main2>
-                <Main2Top>
+                <Main2Top onClick={this.handleMouseOpen}>
                   <Main2TopText>
-                    <HotelName onClick={this.handleMouseOpen}>
+                    <HotelName>
                       <HotelN>Hotel Denver Glenwood Springs</HotelN>
                     </HotelName>
                     <Distance>
@@ -667,6 +678,9 @@ class App extends Component {
           </Background>
           <ModelPopup style={tooltipStyle2}>
             <PopupHotelInfo>
+              <ButtonCloseCon>
+                <ButtonClose onClick={this.handleMouseClose}>x</ButtonClose>
+              </ButtonCloseCon>
               <Main2TopText>
                 <HotelName>
                   <HotelN>Hotel Denver Glenwood Springs</HotelN>
@@ -680,9 +694,6 @@ class App extends Component {
                 <Img src="https://images.squarespace-cdn.com/content/v1/5854861be6f2e12337d023f3/1500174267031-P8B6COA5H5GKN4ZEQGN8/ke17ZwdGBToddI8pDm48kJavBWPA1e4jLbTMWk7i2fgUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcZ_rLReN0qaNtaKMgUquzWx72PBOwAKmo94vXCQj9zMKGf-Rd4saLfAsce8h76zY3/image-asset.png?format=1500w" />
               </DivImgR>
             </PopupHotelInfo>
-            <ButtonCloseCon>
-              <ButtonClose onClick={this.handleMouseClose}>Close</ButtonClose>
-            </ButtonCloseCon>
           </ModelPopup>
         </Wrapper>
       </ThemeProvider>
