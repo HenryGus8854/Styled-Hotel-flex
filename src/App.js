@@ -8,18 +8,18 @@ const theme = {
 //Whole component Wrapper
 const Wrapper = styled.div`
   background-color: #d5d8dc;
-  height: 500px;
-  width: 1500px;
+  width: 100%;
+  height: 100%;
 `;
 
 //Whole component background
 const Background = styled.div`
-  display: flex;
   flex-direction: column;
   border-radius: 5px;
   background-color: #ffffff;
   position: relative;
-  flex: 1;
+  height: 435px;
+  width: 1500px;
 `;
 
 const SmartRank = styled.div`
@@ -153,6 +153,38 @@ const PopContPerks = styled.div`
   text-align: Right;
 `;
 
+//The dialog model DIVs
+const ModelPopup = styled.div`
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  left: 0%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PopupHotelInfo = styled.div`
+  max-height: 150px;
+  max-width: 350px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 9;
+`;
+const ButtonCloseCon = styled.div`
+  flex: 1;
+`;
+const ButtonClose = styled.button`
+  font-size: 1em;
+  flex: 1;
+`;
+
 //The Componets Under the DIVTOP
 const Top = styled.div`
   box-sizing: border-box;
@@ -250,10 +282,13 @@ const Main2Top = styled.div`
   padding-left: 10%;
   display: flex;
   flex-direction: column;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.12) 0 0 12px;
+  }
 `;
+
 const Main2Bottom = styled.div`
   flex: 1;
-
   margin: 1px;
   display: flex;
 `;
@@ -395,24 +430,37 @@ class App extends Component {
     super(props);
 
     this.state = {
-      hover: true
+      smartHover: false,
+      isOpen: false
     };
     this.handleMouseIn = this.handleMouseIn.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
+    this.handleMouseOpen = this.handleMouseOpen.bind(this);
+    this.handleMouseClose = this.handleMouseClose.bind(this);
   }
 
   handleMouseIn() {
-    this.setState({ hover: true });
+    this.setState({ smartHover: true });
+  }
+  handleMouseOpen() {
+    this.setState({ isOpen: true });
+  }
+  handleMouseClose() {
+    this.setState({ isOpen: false });
   }
 
   handleMouseOut() {
-    this.setState({ hover: false });
+    this.setState({ smartHover: false });
   }
 
   render() {
     const tooltipStyle = {
-      display: this.state.hover ? 'block' : 'none'
+      display: this.state.smartHover ? 'block' : 'none'
     };
+    const tooltipStyle2 = {
+      display: this.state.isOpen ? 'flex' : 'none'
+    };
+
     const Dropdown = [
       {
         icon: 'https://img.icons8.com/cotton/64/000000/us-dollar--v1.png',
@@ -515,6 +563,7 @@ class App extends Component {
                 </PopupWrapper>
               </Popup>
             </SmartRank>
+
             <Top>
               <TopWrapper>
                 <TopH1>
@@ -539,7 +588,7 @@ class App extends Component {
               <Main2>
                 <Main2Top>
                   <Main2TopText>
-                    <HotelName>
+                    <HotelName onClick={this.handleMouseOpen}>
                       <HotelN>Hotel Denver Glenwood Springs</HotelN>
                     </HotelName>
                     <Distance>
@@ -616,6 +665,25 @@ class App extends Component {
               </Main3>
             </Main>
           </Background>
+          <ModelPopup style={tooltipStyle2}>
+            <PopupHotelInfo>
+              <Main2TopText>
+                <HotelName>
+                  <HotelN>Hotel Denver Glenwood Springs</HotelN>
+                </HotelName>
+                <Distance>
+                  <Dist>1.2 Miles</Dist>
+                  <Distfrom> from Cavern Adventure Park</Distfrom>
+                </Distance>
+              </Main2TopText>
+              <DivImgR>
+                <Img src="https://images.squarespace-cdn.com/content/v1/5854861be6f2e12337d023f3/1500174267031-P8B6COA5H5GKN4ZEQGN8/ke17ZwdGBToddI8pDm48kJavBWPA1e4jLbTMWk7i2fgUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcZ_rLReN0qaNtaKMgUquzWx72PBOwAKmo94vXCQj9zMKGf-Rd4saLfAsce8h76zY3/image-asset.png?format=1500w" />
+              </DivImgR>
+            </PopupHotelInfo>
+            <ButtonCloseCon>
+              <ButtonClose onClick={this.handleMouseClose}>Close</ButtonClose>
+            </ButtonCloseCon>
+          </ModelPopup>
         </Wrapper>
       </ThemeProvider>
     );
