@@ -448,6 +448,7 @@ class App extends Component {
     this.handleMouseOut = this.handleMouseOut.bind(this);
     this.handleMouseOpen = this.handleMouseOpen.bind(this);
     this.handleMouseClose = this.handleMouseClose.bind(this);
+    this.escapeClose = this.escapeClose.bind(this);
   }
 
   handleMouseIn() {
@@ -463,12 +464,17 @@ class App extends Component {
   handleMouseOut() {
     this.setState({ smartHover: false });
   }
+  escapeClose(e) {
+    if (e.keyCode === 27) {
+      this.handleMouseClose();
+      this.handleMouseOut();
+    }
+  }
   componentDidMount() {
-    window.addEventListener('keydown', e => {
-      if (e.keyCode == 27) {
-        this.handleMouseClose();
-      }
-    });
+    window.addEventListener('keydown', this.escapeClose);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.escapeClose);
   }
 
   render() {
