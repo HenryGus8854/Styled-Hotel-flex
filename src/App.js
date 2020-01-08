@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import EscapeOutside from 'react-escape-outside';
 
 const theme = {
   font: 'sans-serif',
@@ -282,6 +283,9 @@ const Main2 = styled.div`
   justify-content: space-between;
   flex-direction: column;
   margin: 2px;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.12) 0 0 12px;
+  }
 `;
 const Main2Top = styled.div`
   flex: 3;
@@ -293,9 +297,6 @@ const Main2Top = styled.div`
   padding-left: 10%;
   display: flex;
   flex-direction: column;
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.12) 0 0 12px;
-  }
 `;
 
 const Main2Bottom = styled.div`
@@ -676,25 +677,27 @@ class App extends Component {
               </Main3>
             </Main>
           </Background>
-          <ModelPopup style={tooltipStyle2}>
-            <PopupHotelInfo>
-              <ButtonCloseCon>
-                <ButtonClose onClick={this.handleMouseClose}>x</ButtonClose>
-              </ButtonCloseCon>
-              <Main2TopText>
-                <HotelName>
-                  <HotelN>Hotel Denver Glenwood Springs</HotelN>
-                </HotelName>
-                <Distance>
-                  <Dist>1.2 Miles</Dist>
-                  <Distfrom> from Cavern Adventure Park</Distfrom>
-                </Distance>
-              </Main2TopText>
-              <DivImgR>
-                <Img src="https://images.squarespace-cdn.com/content/v1/5854861be6f2e12337d023f3/1500174267031-P8B6COA5H5GKN4ZEQGN8/ke17ZwdGBToddI8pDm48kJavBWPA1e4jLbTMWk7i2fgUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcZ_rLReN0qaNtaKMgUquzWx72PBOwAKmo94vXCQj9zMKGf-Rd4saLfAsce8h76zY3/image-asset.png?format=1500w" />
-              </DivImgR>
-            </PopupHotelInfo>
-          </ModelPopup>
+          <EscapeOutside onEscapeOutside={this.handleMouseClose}>
+            <ModelPopup style={tooltipStyle2}>
+              <PopupHotelInfo>
+                <ButtonCloseCon>
+                  <ButtonClose onClick={this.handleMouseClose}>x</ButtonClose>
+                </ButtonCloseCon>
+                <Main2TopText>
+                  <HotelName>
+                    <HotelN>Hotel Denver Glenwood Springs</HotelN>
+                  </HotelName>
+                  <Distance>
+                    <Dist>1.2 Miles</Dist>
+                    <Distfrom> from Cavern Adventure Park</Distfrom>
+                  </Distance>
+                </Main2TopText>
+                <DivImgR>
+                  <Img src="https://images.squarespace-cdn.com/content/v1/5854861be6f2e12337d023f3/1500174267031-P8B6COA5H5GKN4ZEQGN8/ke17ZwdGBToddI8pDm48kJavBWPA1e4jLbTMWk7i2fgUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcZ_rLReN0qaNtaKMgUquzWx72PBOwAKmo94vXCQj9zMKGf-Rd4saLfAsce8h76zY3/image-asset.png?format=1500w" />
+                </DivImgR>
+              </PopupHotelInfo>
+            </ModelPopup>
+          </EscapeOutside>
         </Wrapper>
       </ThemeProvider>
     );
