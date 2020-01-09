@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, getSelector } from 'styled-components';
 
 const theme = {
   font: 'sans-serif',
@@ -44,8 +44,24 @@ const Popup = styled.div`
   border-left: 20px solid white;
   border-top: 20px solid transparent;
   top: 100%;
+  opacity: 1;
   display: flex;
+  transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
 `;
+const PopupClose = styled.div`
+  width: 0px;
+  height: 0;
+  opacity: 0;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+`;
+const PopfadeOut = styled.div`
+  opacity: 0;
+  width: 0;
+  display: none;
+  height: 0;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+`;
+
 const PopupWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -436,38 +452,48 @@ const Input1 = styled.input`
   margin-top: 5%;
 `;
 
+const styles = {
+  transition: 'opacity 1s;'
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       smartHover: false,
-      isOpen: false
+      isOpen: false,
+      opacitySmart: 0,
+      opacityModel: 0
     };
-    this.handleMouseIn = this.handleMouseIn.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
-    this.handleMouseOpen = this.handleMouseOpen.bind(this);
-    this.handleMouseClose = this.handleMouseClose.bind(this);
+    this.smartToggle = this.smartToggle.bind(this);
+    this.smartOff = this.smartOff.bind(this);
+    this.modelToggle = this.modelToggle.bind(this);
+    this.modelOff = this.modelOff.bind(this);
     this.escapeClose = this.escapeClose.bind(this);
   }
 
-  handleMouseIn() {
+  smartToggle() {
     this.setState({ smartHover: true });
+    this.setState({ opacitySmart: 1 });
   }
-  handleMouseOpen() {
-    this.setState({ isOpen: true });
+  smartOff() {
+    this.setState({ smartHover: false });
+    this.setState({ opacitySmart: 0 });
   }
-  handleMouseClose() {
+  modelToggle() {
+    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({ opacityModel: 1 });
+  }
+  modelOff() {
     this.setState({ isOpen: false });
+    this.setState({ opacityModel: 0 });
   }
 
-  handleMouseOut() {
-    this.setState({ smartHover: false });
-  }
   escapeClose(e) {
     if (e.keyCode === 27) {
-      this.handleMouseClose();
-      this.handleMouseOut();
+      this.smartOff();
+      this.modelOff();
     }
   }
   componentDidMount() {
@@ -478,13 +504,6 @@ class App extends Component {
   }
 
   render() {
-    const tooltipStyle = {
-      display: this.state.smartHover ? 'block' : 'none'
-    };
-    const tooltipStyle2 = {
-      display: this.state.isOpen ? 'flex' : 'none'
-    };
-
     const Dropdown = [
       {
         icon: 'https://img.icons8.com/cotton/64/000000/us-dollar--v1.png',
@@ -517,11 +536,12 @@ class App extends Component {
         <Wrapper>
           <Background>
             <SmartRank
-              onMouseOver={this.handleMouseIn}
-              onMouseOut={this.handleMouseOut}
+              onMouseOver={this.smartToggle}
+              onMouseOut={this.smartOff}
             >
               <Rankn>1</Rankn>
-              <Popup style={tooltipStyle}>
+
+              <Popup style={{ ...styles, opacity: this.state.opacitySmart }}>
                 <PopupWrapper>
                   <PopupHeader>
                     <SmartH1>
@@ -610,7 +630,7 @@ class App extends Component {
                 </M1Img>
               </Main1>
               <Main2>
-                <Main2Top onClick={this.handleMouseOpen}>
+                <Main2Top onClick={this.modelToggle} data-transition="fade">
                   <Main2TopText>
                     <HotelName>
                       <HotelN>Hotel Denver Glenwood Springs</HotelN>
@@ -690,10 +710,16 @@ class App extends Component {
             </Main>
           </Background>
 
-          <ModelPopup style={tooltipStyle2}>
+          <ModelPopup
+            style={{
+              ...styles,
+              opacity: this.state.opacityModel,
+              display: this.state.isOpen ? 'flex' : 'none'
+            }}
+          >
             <PopupHotelInfo>
               <ButtonCloseCon>
-                <ButtonClose onClick={this.handleMouseClose}>x</ButtonClose>
+                <ButtonClose onClick={this.modelOff}>x</ButtonClose>
               </ButtonCloseCon>
               <Main2TopText>
                 <HotelName>
